@@ -1,3 +1,27 @@
 {
-  "extends": "@antfu"
+  "extends": "@antfu",
+  "rules": {
+    "@typescript-eslint/comma-dangle": "off",
+    "vue/component-tags-order": ["error", {
+      "order": [ [ "script", "template" ], "style" ]
+    }],
+    "vue/singleline-html-element-content-newline": ["error", {
+      "ignoreWhenNoAttributes": true,
+      "ignoreWhenEmpty": true,
+      "ignores": ["router-link", "button", "div"]
+    }],
+    "vue/html-self-closing": ["error", {
+      "html": {
+        "void": "never",
+        "normal": "always",
+        "component": "any"
+      },
+      "svg": "always",
+      "math": "always"
+    }],
+    "vue/component-name-in-template-casing": ["error", "kebab-case", {
+      "registeredComponentsOnly": true,
+      "ignores": []
+    }]
+  }
 }
