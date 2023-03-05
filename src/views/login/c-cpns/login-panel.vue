@@ -2,14 +2,24 @@
   <div class="login-panel">
     <h1 class="title">LM后台管理系统</h1>
     <div class="tabs">
-      <el-tabs type="border-card" stretch>
-        <el-tab-pane label="账号登录">
-          <div>123</div>
-          <div>456</div>
+      <el-tabs v-model="activeName" type="border-card" stretch>
+        <el-tab-pane name="account">
+          <template #label>
+            <div class="label">
+              <el-icon><UserFilled /></el-icon>
+              <span class="text">帐号登录</span>
+            </div>
+          </template>
+          <pane-account ref="accountRef" />
         </el-tab-pane>
-        <el-tab-pane label="手机登录">
-          <div>789</div>
-          <div>012</div>
+        <el-tab-pane name="phone">
+          <template #label>
+            <div class="label">
+              <el-icon><Iphone /></el-icon>
+              <span class="text">手机登录</span>
+            </div>
+          </template>
+          <pane-phone />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -17,14 +27,28 @@
       <el-checkbox v-model="isRemPwd" label="记住密码" size="large" />
       <el-link type="primary">忘记密码</el-link>
     </div>
-    <el-button type="primary" class="login-btn" size="large">立即登录</el-button>
+    <el-button type="primary" class="login-btn" size="large" @click="handleLoginBtnClick">立即登录</el-button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import PaneAccount from './pane-account.vue'
+import PanePhone from './pane-phone.vue'
 
+const activeName = ref('account')
 const isRemPwd = ref(false)
+const accountRef = ref<InstanceType<typeof PaneAccount>>()
+
+function handleLoginBtnClick() {
+  if (activeName.value === 'account') {
+    // 1.获取子组件的实例
+    // 2.调用方法
+    accountRef.value?.loginAction()
+  } else {
+    window.console.log('点击了手机登录')
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -37,7 +61,7 @@ const isRemPwd = ref(false)
     margin-bottom: 15px;
   }
 
-  .icon {
+  .label {
     display: flex;
     align-items: center;
     justify-content: center;
