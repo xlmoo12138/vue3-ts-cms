@@ -1,6 +1,7 @@
 <template>
   <div class="pane-account">
     <el-form
+      ref="formRef"
       :model="account"
       :rules="accountRules"
       label-width="60px"
@@ -18,8 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import type { FormRules } from 'element-plus'
-import { reactive } from 'vue'
+import { ElMessage } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
+import { reactive, ref } from 'vue'
 
 // 1.定义account的数据
 const account = reactive({
@@ -40,8 +42,15 @@ const accountRules: FormRules = {
 }
 
 // 3.执行帐号登录的逻辑
+const formRef = ref<FormInstance>()
 function loginAction() {
-  window.console.log('pane-account function loginAction', account.name, account.password)
+  formRef.value?.validate((valid) => {
+    if (valid) {
+      window.console.log('验证成功')
+    } else {
+      ElMessage.error('帐号或者密码输入的规则错误~')
+    }
+  })
 }
 defineExpose({
   loginAction
