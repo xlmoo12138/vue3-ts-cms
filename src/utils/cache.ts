@@ -20,7 +20,7 @@ class HYCache {
       return JSON.parse(value)
   }
 
-  deleteCache(key: string) {
+  removeCache(key: string) {
     this.storage.removeItem(key)
   }
 
