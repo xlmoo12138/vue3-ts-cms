@@ -22,6 +22,7 @@
 import { ElMessage } from 'element-plus'
 import type { FormInstance, FormRules } from 'element-plus'
 import { reactive, ref } from 'vue'
+import useLoginStore from '@/store/login/login'
 
 // 1.定义account的数据
 const account = reactive({
@@ -43,10 +44,15 @@ const accountRules: FormRules = {
 
 // 3.执行帐号登录的逻辑
 const formRef = ref<FormInstance>()
+const loginStore = useLoginStore()
 function loginAction() {
   formRef.value?.validate((valid) => {
     if (valid) {
-      window.console.log('验证成功')
+      // 1.获取用户输入的帐号和密码
+      const name = account.name
+      const password = account.password
+      // 2.向服务器发送网络请求（携带账号和密码）
+      loginStore.loginAccountAction({ name, password })
     } else {
       ElMessage.error('帐号或者密码输入的规则错误~')
     }
