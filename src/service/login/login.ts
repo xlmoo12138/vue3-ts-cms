@@ -18,3 +18,9 @@ export function getUserInfoById(id: number) {
     // }
   })
 }
+
+export function getUserMenusByRoleId(id: number) {
+  return hyRequest.get({
+    url: `/role/${id}/menu`
+  })
+}
