@@ -26,8 +26,8 @@ import useLoginStore from '@/store/login/login'
 import type { IAccount } from '@/types'
 import { localCache } from '@/utils/cache'
 
-const CACHE_NAME = "name"
-const CACHE_PASSWORD = "password"
+const CACHE_NAME = 'name'
+const CACHE_PASSWORD = 'password'
 
 // 1.定义account的数据
 const account = reactive<IAccount>({
@@ -57,7 +57,7 @@ function loginAction(isRemPwd: boolean) {
       const name = account.name
       const password = account.password
       // 2.向服务器发送网络请求（携带账号和密码）
-      loginStore.loginAccountAction({ name, password }).then((res) => {
+      loginStore.loginAccountAction({ name, password }).then(() => {
         // 3判断是否记住账号和密码
         if (isRemPwd) {
           localCache.setCache(CACHE_NAME, name)
