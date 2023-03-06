@@ -1,12 +1,12 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="210px">
-        <main-menu />
+      <el-aside :width="isFold ? '60px' : '210px'">
+        <main-menu :is-Fold="isFold" />
       </el-aside>
       <el-container>
         <el-header height="50px">
-          <main-header />
+          <main-header @fold-change="handleFoldChange" />
         </el-header>
         <el-main>Main</el-main>
       </el-container>
@@ -15,8 +15,15 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import MainMenu from '@/components/main-menu/main-menu.vue'
 import MainHeader from '@/components/main-header/main-header.vue'
+
+// 处理main-header中的折叠变化
+const isFold = ref(false)
+function handleFoldChange(flag: boolean) {
+  isFold.value = flag
+}
 </script>
 
 <style lang="less" scoped>
