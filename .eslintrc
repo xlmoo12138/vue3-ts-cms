@@ -12,8 +12,8 @@
     }],
     "vue/html-self-closing": ["error", {
       "html": {
-        "void": "never",
-        "normal": "always",
+        "void": "always",
+        "normal": "never",
         "component": "any"
       },
       "svg": "always",

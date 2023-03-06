@@ -1,7 +1,7 @@
 <template>
   <div class="main-menu">
     <div class="logo">
-      <img class="img" src="@/assets/img/logo.svg" alt="">
+      <img class="img" src="@/assets/img/logo.svg" alt="" />
       <h2 v-show="!isFold" class="title">Lemmon-CMS</h2>
     </div>
     <div class="menu">
@@ -23,7 +23,7 @@
             </template>
 
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item :index="`${subitem.id}`">{{ subitem.name }}</el-menu-item>
+              <el-menu-item :index="`${subitem.id}`" @click="handleItemClick(subitem)">{{ subitem.name }}</el-menu-item>
             </template>
           </el-sub-menu>
         </template>
@@ -73,6 +73,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import useLoginStore from '@/store/login/login'
 
 // 0定义props
@@ -82,10 +83,17 @@ defineProps({
     default: false
   }
 })
+
 // 1获取动态的菜单
 const loginStore = useLoginStore()
 const userMenus = loginStore.userMenus
-window.console.log(userMenus)
+
+// 2监听item的点击
+const router = useRouter()
+function handleItemClick(item: any) {
+  const url = item.url
+  router.push(url)
+}
 </script>
 
 <style lang="less" scoped>
