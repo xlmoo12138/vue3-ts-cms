@@ -1,29 +1,22 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="200px">Aside</el-aside>
+      <el-aside width="210px">
+        <main-menu />
+      </el-aside>
       <el-container>
-        <el-header height="50px">Header</el-header>
+        <el-header height="50px">
+          <main-header />
+        </el-header>
         <el-main>Main</el-main>
       </el-container>
     </el-container>
   </div>
-  <!-- <h2>main</h2>
-  <button @click="handleExitClick">退出登录</button> -->
 </template>
 
 <script setup lang="ts">
-// import { useRouter } from 'vue-router'
-// import { LOGIN_TOKEN } from '@/global/constants'
-// import { localCache } from '@/utils/cache'
-
-// const router = useRouter()
-// function handleExitClick() {
-//   // 1删除token
-//   localCache.removeCache(LOGIN_TOKEN)
-//   // 2跳回到login页面
-//   router.push('/login')
-// }
+import MainMenu from '@/components/main-menu/main-menu.vue'
+import MainHeader from '@/components/main-header/main-header.vue'
 </script>
 
 <style lang="less" scoped>
