@@ -3,7 +3,7 @@ import { accountLoginRequest, getUserInfoById, getUserMenusByRoleId } from '@/se
 import type { IAccount } from '@/types'
 import { localCache } from '@/utils/cache'
 import { LOGIN_TOKEN } from '@/global/constants'
-import { router } from '@/router/router'
+import { router } from '@/router'
 
 interface ILoginState {
   token: string
