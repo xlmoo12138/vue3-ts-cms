@@ -55,6 +55,9 @@
         <template v-for="item in userMenus" :key="item.id">
           <el-sub-menu :index="`${item.id}`">
             <template #title>
+              <el-icon>
+                <component :is="item.icon.split('-icon-')[1]" />
+              </el-icon>
               <span>{{ item.name }}</span>
             </template>
 
