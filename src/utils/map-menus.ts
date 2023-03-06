@@ -1,3 +1,4 @@
+/* eslint-disable import/no-mutable-exports */
 import type { RouteRecordRaw } from 'vue-router'
 
 function loadLocalRoutes() {
@@ -18,7 +19,7 @@ function loadLocalRoutes() {
 
   return localRoutes
 }
-
+export let firstMenu: any = null
 export function mapMenusToRoutes(userMenus: any) {
   // 1.加载本地路由
   const localRoutes = loadLocalRoutes()
@@ -28,8 +29,10 @@ export function mapMenusToRoutes(userMenus: any) {
   for (const menu of userMenus) {
     for (const submenu of menu.children) {
       const route = localRoutes.find(item => item.path === submenu.url)
-      if (route) {
-        routes.push(route)
+      if (route) { routes.push(route) }
+      // 记录第一个被匹配到的菜单
+      if (!firstMenu && route) {
+        firstMenu = submenu
       }
     }
   }
