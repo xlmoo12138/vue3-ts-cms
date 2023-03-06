@@ -5,7 +5,7 @@
       <h2 class="title">Lemmon-CMS</h2>
     </div>
     <div class="menu">
-      <el-menu
+      <!-- <el-menu
         text-color="#b7bdc3"
         active-text-color="#fff"
         background-color="#001529"
@@ -44,12 +44,37 @@
           <el-menu-item>你的故事</el-menu-item>
           <el-menu-item>故事列表</el-menu-item>
         </el-sub-menu>
+      </el-menu> -->
+      <el-menu
+        default-active="3"
+        text-color="#b7bdc3"
+        active-text-color="#fff"
+        background-color="#001529"
+      >
+        <!-- 遍历整个菜单 -->
+        <template v-for="item in userMenus" :key="item.id">
+          <el-sub-menu :index="`${item.id}`">
+            <template #title>
+              <span>{{ item.name }}</span>
+            </template>
+
+            <template v-for="subitem in item.children" :key="subitem.id">
+              <el-menu-item :index="`${subitem.id}`">{{ subitem.name }}</el-menu-item>
+            </template>
+          </el-sub-menu>
+        </template>
       </el-menu>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import useLoginStore from '@/store/login/login'
+
+// 1获取动态的菜单
+const loginStore = useLoginStore()
+const userMenus = loginStore.userMenus
+window.console.log(userMenus)
 </script>
 
 <style lang="less" scoped>

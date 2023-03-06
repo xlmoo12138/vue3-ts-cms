@@ -21,7 +21,7 @@ import MainHeader from '@/components/main-header/main-header.vue'
 
 <style lang="less" scoped>
 .main {
-  color: red;
+  width: 100%;
   height: 100%;
 }
 
@@ -29,15 +29,23 @@ import MainHeader from '@/components/main-header/main-header.vue'
   height: 100%;
 
   .el-aside {
-    background-color: peru;
-  }
+    overflow-x: hidden;
+    overflow-y: auto;
+    line-height: 200px;
+    text-align: left;
+    cursor: pointer;
+    background-color: #001529;
+    transition: width 0.3s linear;
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
 
-  .el-header {
-    background-color: skyblue;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .el-main {
-    background-color: slateblue;
+    background-color: #f0f2f5;
   }
 }
 </style>
