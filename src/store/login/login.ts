@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import useMainStore from '../main/main'
 import { accountLoginRequest, getUserInfoById, getUserMenusByRoleId } from '@/service/login/login'
 import type { IAccount } from '@/types'
 import { localCache } from '@/utils/cache'
@@ -41,10 +42,14 @@ const useLoginStore = defineStore('login', {
       localCache.setCache('userInfo', userInfo)
       localCache.setCache('userMenus', userMenus)
 
+      // 5.请求所有的roles和departments数据
+      const mainStore = useMainStore()
+      mainStore.fetchEntireDataAction()
+
       // 重要:动态的添加路由
       const routes = mapMenusToRoutes(userMenus)
       routes.forEach(route => router.addRoute('main', route))
-      // 5页面跳转（main页面）
+      // 6页面跳转（main页面）
       router.push('/main')
     },
     loadLocalCacheAction() {
@@ -56,6 +61,10 @@ const useLoginStore = defineStore('login', {
         this.token = token
         this.userInfo = userInfo
         this.userMenus = userMenus
+
+        // 1.请求所有的roles和departments数据
+        const mainStore = useMainStore()
+        mainStore.fetchEntireDataAction()
 
         // 2 动态加载路由
         const routes = mapMenusToRoutes(userMenus)
