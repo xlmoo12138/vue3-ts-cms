@@ -23,8 +23,16 @@
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="createAt" label="创建时间" />
-        <el-table-column align="center" prop="createAt" label="更新时间" />
+        <el-table-column align="center" prop="createAt" label="创建时间">
+          <template #default="scope">
+            {{ formatUTC(scope.row.createAt) }}
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="updateAt" label="更新时间">
+          <template #default="scope">
+            {{ formatUTC(scope.row.updateAt) }}
+          </template>
+        </el-table-column>
         <el-table-column align="center" label="操作" width="150px">
           <el-button size="small" icon="Edit" type="primary" text>编辑</el-button>
           <el-button size="small" icon="delete" type="danger" text>删除</el-button>
@@ -38,6 +46,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import useSystemStore from '@/store/main/system/system'
+import { formatUTC } from '@/utils/format'
 // 1发起action，请求userList的数据
 const systemStore = useSystemStore()
 systemStore.postUsersListAction()
