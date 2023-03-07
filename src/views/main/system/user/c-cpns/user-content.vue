@@ -34,8 +34,18 @@
           </template>
         </el-table-column>
         <el-table-column align="center" label="操作" width="150px">
-          <el-button size="small" icon="Edit" type="primary" text>编辑</el-button>
-          <el-button size="small" icon="delete" type="danger" text>删除</el-button>
+          <template #default="scope">
+            <el-button size="small" icon="Edit" type="primary" text>编辑</el-button>
+            <el-button
+              size="small"
+              icon="delete"
+              type="danger"
+              text
+              @click="handleDeleteBtnClick(scope.row.id)"
+            >
+              删除
+            </el-button>
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -84,6 +94,11 @@ function fetchUsersListData(formData: any = {}) {
   const queryInfo = { ...pageInfo, ...formData }
   // 发起网络请求
   systemStore.postUsersListAction(queryInfo)
+}
+
+// 5.编辑和删除的操作
+function handleDeleteBtnClick(id: number) {
+  systemStore.deleteUserByIdAction(id)
 }
 
 defineExpose({

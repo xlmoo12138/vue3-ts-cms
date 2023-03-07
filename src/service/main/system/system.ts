@@ -6,3 +6,9 @@ export function postUsersListData(queryInfo: any) {
     data: queryInfo
   })
 }
+
+export function deleteUserById(id: number) {
+  return hyRequest.delete({
+    url: `/users/${id}`
+  })
+}
