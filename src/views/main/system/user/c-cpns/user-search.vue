@@ -52,7 +52,9 @@
 <script setup lang="ts">
 import type { FormInstance } from 'element-plus'
 import { reactive, ref } from 'vue'
-
+// 定义自定义事件
+const emit = defineEmits(['queryClick', 'resetClick'])
+// 定义form数据
 const serachForm = reactive({
   name: '',
   realname: '',
@@ -62,10 +64,13 @@ const serachForm = reactive({
 })
 const formRef = ref <FormInstance>()
 function handleResetClick() {
+  // 1.form中的数据全部重置
   formRef.value?.resetFields()
+  // 2.将事件传出去，content内部重新发送网络请求
+  emit('resetClick')
 }
 function handleQueryClick() {
-  window.console.log('handleQueryClick')
+  emit('queryClick', serachForm)
 }
 </script>
 

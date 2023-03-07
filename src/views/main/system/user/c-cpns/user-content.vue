@@ -77,13 +77,18 @@ function handleCurrentChange() {
 }
 
 // 4.定义函数， 发送网络请求
-function fetchUsersListData() {
+function fetchUsersListData(formData: any = {}) {
   const size = pageSize.value
   const offset = (currentPage.value - 1) * size
-  const info = { size, offset }
+  const pageInfo = { size, offset }
+  const queryInfo = { ...pageInfo, ...formData }
   // 发起网络请求
-  systemStore.postUsersListAction(info)
+  systemStore.postUsersListAction(queryInfo)
 }
+
+defineExpose({
+  fetchUsersListData
+})
 </script>
 
 <style lang="less" scoped>
