@@ -44,7 +44,7 @@
     <!-- 重置和查询按钮 -->
     <div class="btns">
       <el-button icon="Refresh" @click="handleResetClick">重置</el-button>
-      <el-button icon="Search" type="primary">查询</el-button>
+      <el-button icon="Search" type="primary" @click="handleQueryClick">查询</el-button>
     </div>
   </div>
 </template>
@@ -63,6 +63,9 @@ const serachForm = reactive({
 const formRef = ref <FormInstance>()
 function handleResetClick() {
   formRef.value?.resetFields()
+}
+function handleQueryClick() {
+  window.console.log('handleQueryClick')
 }
 </script>
 
