@@ -17,11 +17,10 @@
             <el-input placeholder="请输入查询的电话号码" />
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
+
         <el-col :span="8">
           <el-form-item label="状态">
-            <el-select placeholder="请选择状态" style="width: 100%">
+            <el-select placeholder="请选择查询的状态" style="width: 100%">
               <el-option label="启用" value="1" />
               <el-option label="禁用" value="0" />
             </el-select>
