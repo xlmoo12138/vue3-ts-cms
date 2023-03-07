@@ -1,5 +1,6 @@
 <template>
   <div class="user-search">
+    <!-- 输入搜索关键字的表单 -->
     <el-form label-width="80px" size="large">
       <el-row :gutter="20">
         <el-col :span="8">
@@ -38,6 +39,12 @@
         </el-col>
       </el-row>
     </el-form>
+
+    <!-- 重置和查询按钮 -->
+    <div class="btns">
+      <el-button icon="Refresh">重置</el-button>
+      <el-button icon="Search" type="primary">查询</el-button>
+    </div>
   </div>
 </template>
 
@@ -53,6 +60,15 @@
   .el-form-item {
     padding: 20px 30px;
     margin-bottom: 0;
+  }
+
+  .btns {
+    text-align: right;
+    padding: 0 50px 10px 0;
+
+    .el-button {
+      height: 36px;
+    }
   }
 }
 </style>
