@@ -1,7 +1,8 @@
 <template>
   <div class="user">
     <user-search @query-click="handleQueryClick" @reset-click="handleResetClick" />
-    <user-content ref="contentRef" />
+    <user-content ref="contentRef" @new-click="handleNewClick" />
+    <user-modal ref="modalRef" />
   </div>
 </template>
 
@@ -9,12 +10,20 @@
 import { ref } from 'vue'
 import UserSearch from './c-cpns/user-search.vue'
 import UserContent from './c-cpns/user-content.vue'
+import UserModal from './c-cpns/user-modal.vue'
+
 const contentRef = ref<InstanceType<typeof UserContent>>()
 function handleQueryClick(formData: any) {
   contentRef.value?.fetchUsersListData(formData)
 }
 function handleResetClick() {
   contentRef.value?.fetchUsersListData()
+}
+
+const modalRef = ref<InstanceType<typeof UserModal>>()
+// 对modal的组件
+function handleNewClick() {
+  modalRef.value?.setDialogVisible()
 }
 </script>
 

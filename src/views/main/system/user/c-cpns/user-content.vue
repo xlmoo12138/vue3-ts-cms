@@ -2,7 +2,7 @@
   <div class="user-content">
     <div class="header">
       <h3 class="title">用户列表</h3>
-      <el-button type="primary">新建用户</el-button>
+      <el-button type="primary" @click="handleNewBtnClick">新建用户</el-button>
     </div>
     <div class="table">
       <el-table :data="usersList" border style="width: 100%">
@@ -69,6 +69,8 @@ import { ref } from 'vue'
 import useSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format'
 
+// 定义自定义事件
+const emit = defineEmits(['newClick'])
 const currentPage = ref(1)
 const pageSize = ref(10)
 
@@ -100,7 +102,10 @@ function fetchUsersListData(formData: any = {}) {
 function handleDeleteBtnClick(id: number) {
   systemStore.deleteUserByIdAction(id)
 }
-
+// 6.新建用户的操作
+function handleNewBtnClick() {
+  emit('newClick')
+}
 defineExpose({
   fetchUsersListData
 })
