@@ -6,12 +6,23 @@
     </div>
     <div class="table">
       <el-table :data="usersList" border style="width: 100%">
-        <el-table-column align="center" type="selection" label="选择" />
-        <el-table-column align="center" type="index" label="序号" width="80px" />
+        <el-table-column align="center" type="selection" label="选择" width="60px" />
+        <el-table-column align="center" type="index" label="序号" width="60px" />
         <el-table-column align="center" prop="name" label="用户名" width="150px" />
         <el-table-column align="center" prop="realname" label="真实姓名" width="150px" />
         <el-table-column align="center" prop="cellphone" label="手机号码" width="150px" />
-        <el-table-column align="center" prop="enable" label="状态" width="100px" />
+        <el-table-column align="center" prop="enable" label="状态" width="100px">
+          <!-- 作用域插槽 -->
+          <template #default="scope">
+            <el-button
+              size="small"
+              :type="scope.row.enable ? 'primary' : 'danger'"
+              plain
+            >
+              {{ scope.row.enable ? '启用' : '禁用' }}
+            </el-button>
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="createAt" label="创建时间" />
         <el-table-column align="center" prop="createAt" label="更新时间" />
         <el-table-column align="center" label="操作" width="150px">
