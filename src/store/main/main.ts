@@ -1,5 +1,5 @@
-import { getEntireDepartments, getEntireRoles } from '@/service/main/main'
 import { defineStore } from 'pinia'
+import { getEntireDepartments, getEntireRoles } from '@/service/main/main'
 
 interface IMainState {
   entireRoles: any[]

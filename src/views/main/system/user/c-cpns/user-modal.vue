@@ -26,19 +26,17 @@
             />
           </el-form-item>
           <el-form-item label="选择角色" prop="roleId">
-            <el-input
-              v-model="formData.roleId"
-              placeholder="请选择角色"
-              style="width: 100%"
-            >
-            </el-input>
+            <el-select v-model="formData.roleId" placeholder="请选择角色" style="width: 100%">
+              <template v-for="item in entireRoles" :key="item.id">
+                <el-option :label="item.name" :value="item.id" />
+              </template>
+            </el-select>
           </el-form-item>
           <el-form-item label="选择部门" prop="departmentId">
-            <el-select
-              v-model="formData.departmentId"
-              placeholder="请选择部门"
-              style="width: 100%"
-            >
+            <el-select v-model="formData.departmentId" placeholder="请选择部门" style="width: 100%">
+              <template v-for="item in entireDepartments" :key="item.id">
+                <el-option :label="item.name" :value="item.id" />
+              </template>
             </el-select>
           </el-form-item>
         </el-form>
@@ -46,7 +44,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">
+          <el-button type="primary" @click="handleConfirmClick">
             确定
           </el-button>
         </span>
@@ -57,8 +55,11 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import useMainStore from '@/store/main/main'
+import useSystemStore from '@/store/main/system/system'
 
-const dialogVisible = ref(true)
+const dialogVisible = ref(false)
 const formData = reactive({
   name: '',
   realname: '',
@@ -68,12 +69,23 @@ const formData = reactive({
   departmentId: ''
 })
 
-// 定义设置dialogVisible的方法
+// 1获取roles和departments的数据
+const mainStore = useMainStore()
+const systenStore = useSystemStore()
+const { entireRoles, entireDepartments } = storeToRefs(mainStore)
+
+// 2定义设置dialogVisible的方法
 function setDialogVisible() {
   // 这里可以做一层拦截
   dialogVisible.value = true
 }
 
+// 3.点击了确定逻辑
+function handleConfirmClick() {
+  dialogVisible.value = false
+  // 创建新用户
+  systenStore.newUserDataAction(formData)
+}
 
 // 暴露属性和方法
 defineExpose({
