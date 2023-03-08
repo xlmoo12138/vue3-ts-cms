@@ -8,42 +8,42 @@
     </div>
     <div class="table">
       <el-table :data="pageList" border style="width: 100%">
-        <el-table-column align="center" type="selection" label="选择" width="60px" />
-        <el-table-column align="center" type="index" label="序号" width="60px" />
-        <el-table-column align="center" prop="name" label="部门名称" width="150px" />
-        <el-table-column align="center" prop="leader" label="部门领导" width="150px" />
-        <el-table-column align="center" prop="parentId" label="上级部门" width="150px" />
-        <el-table-column align="center" prop="createAt" label="创建时间">
-          <template #default="scope">
-            {{ formatUTC(scope.row.createAt) }}
+        <template v-for="item in contentConfig.propsList" :key="item.prop">
+          <template v-if="item.type === 'timer'">
+            <el-table-column align="center" v-bind="item">
+              <template #default="scope">
+                {{ formatUTC(scope.row[item.prop]) }}
+              </template>
+            </el-table-column>
           </template>
-        </el-table-column>
-        <el-table-column align="center" prop="updateAt" label="更新时间">
-          <template #default="scope">
-            {{ formatUTC(scope.row.updateAt) }}
+          <template v-else-if="item.type === 'handler'">
+            <el-table-column align="center" v-bind="item">
+              <template #default="scope">
+                <el-button
+                  size="small"
+                  icon="Edit"
+                  type="primary"
+                  text
+                  @click="handleEditBtnClick(scope.row)"
+                >
+                  编辑
+                </el-button>
+                <el-button
+                  size="small"
+                  icon="Delete"
+                  type="danger"
+                  text
+                  @click="handleDeleteBtnClick(scope.row.id)"
+                >
+                  删除
+                </el-button>
+              </template>
+            </el-table-column>
           </template>
-        </el-table-column>
-        <el-table-column align="center" label="操作" width="150px">
-          <template #default="scope">
-            <el-button
-              size="small"
-              icon="Edit"
-              type="primary"
-              text @click="handleEditBtnClick(scope.row)"
-            >
-              编辑
-            </el-button>
-            <el-button
-              size="small"
-              icon="delete"
-              type="danger"
-              text
-              @click="handleDeleteBtnClick(scope.row.id)"
-            >
-              删除
-            </el-button>
+          <template v-else>
+            <el-table-column align="center" v-bind="item" />
           </template>
-        </el-table-column>
+        </template>
       </el-table>
     </div>
     <div class="pagination">
@@ -72,8 +72,10 @@ interface IProps {
       title?: string
       btnTitle?: string
     }
+    propsList: any[]
   }
 }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps<IProps>()
 // 定义自定义事件
 const emit = defineEmits(['newClick', 'editClick'])
