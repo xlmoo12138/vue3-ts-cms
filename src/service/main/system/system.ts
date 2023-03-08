@@ -35,3 +35,9 @@ export function postPageListData(pageName: string, queryInfo: any) {
     data: queryInfo
   })
 }
+
+export function deletePageById(pageName: string, id: number) {
+  return hyRequest.delete({
+    url: `/${pageName}/${id}`
+  })
+}
