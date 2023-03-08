@@ -27,3 +27,11 @@ export function editUserData(id: number, userInfo: any) {
     data: userInfo
   })
 }
+
+/** 针对页面的网络请求  增删改查 */
+export function postPageListData(pageName: string, queryInfo: any) {
+  return hyRequest.post({
+    url: `/${pageName}/list`,
+    data: queryInfo
+  })
+}
