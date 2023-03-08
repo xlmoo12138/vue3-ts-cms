@@ -1,7 +1,15 @@
 <template>
   <div class="department">
     <page-search :search-config="searchConfig" @query-click="handleQueryClick" @reset-click="handleResetClick" />
-    <page-content ref="contentRef" :content-config="contentConfig" @new-click="handleNewClick" @edit-click="handleEditClick" />
+    <page-content
+      ref="contentRef"
+      :content-config="contentConfig"
+      @new-click="handleNewClick"
+      @edit-click="handleEditClick"
+    >
+      <template #leader="scope">ha--{{ scope.row[scope.prop] }}</template>
+      <template #parent="scope">ha--{{ scope.row[scope.prop] }}</template>
+    </page-content>
     <page-modal ref="modalRef" />
   </div>
 </template>
