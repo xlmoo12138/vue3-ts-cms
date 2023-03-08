@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { ISystemState } from './type'
-import { deletePageById, deleteUserById, editUserData, newUserData, postPageListData, postUsersListData } from '@/service/main/system/system'
+import { deletePageById, deleteUserById, editPageData, editUserData, newPageData, newUserData, postPageListData, postUsersListData } from '@/service/main/system/system'
 
 const useSystemStore = defineStore('system', {
   state: (): ISystemState => ({
@@ -40,6 +40,7 @@ const useSystemStore = defineStore('system', {
       // 2.重新请求新的数据
       this.postUsersListAction({ offset: 0, size: 10 })
     },
+
     /** 针对页面的数据  增删改查 */
     async postPageListAction(pageName: string, queryInfo: any) {
       const pageListRes = await postPageListData(pageName, queryInfo)
@@ -52,7 +53,23 @@ const useSystemStore = defineStore('system', {
       window.console.log(deleteRes)
 
       // 重新请求新的数据
-      this.postPageListAction(pageName, { offset: 0, size: 0 })
+      this.postPageListAction(pageName, { offset: 0, size: 10 })
+    },
+    async newPageDataAction(pageName: string, pageInfo: any) {
+      // 1.创建新的部门
+      const newPageRes = await newPageData(pageName, pageInfo)
+      window.console.log(newPageRes)
+
+      // 2.重新请求新的数据
+      this.postPageListAction(pageName, { offset: 0, size: 10 })
+    },
+    async editPageDataAction(pageName: string, id: number, pageInfo: any) {
+      // 1.更新数据
+      const editPageRes = await editPageData(pageName, id, pageInfo)
+      window.console.log(editPageRes)
+
+      // 2.重新请求新的数据
+      this.postPageListAction(pageName, { offset: 0, size: 10 })
     }
   }
 })
