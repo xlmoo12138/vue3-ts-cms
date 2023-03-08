@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <user-search @query-click="handleQueryClick" @reset-click="handleResetClick" />
-    <user-content ref="contentRef" @new-click="handleNewClick" />
+    <user-content ref="contentRef" @new-click="handleNewClick" @edit-click="handleEditClick" />
     <user-modal ref="modalRef" />
   </div>
 </template>
@@ -23,7 +23,10 @@ function handleResetClick() {
 const modalRef = ref<InstanceType<typeof UserModal>>()
 // 对modal的组件
 function handleNewClick() {
-  modalRef.value?.setDialogVisible()
+  modalRef.value?.setDialogVisible(true)
+}
+function handleEditClick(itemData: any) {
+  modalRef.value?.setDialogVisible(false, itemData)
 }
 </script>
 

@@ -35,7 +35,14 @@
         </el-table-column>
         <el-table-column align="center" label="操作" width="150px">
           <template #default="scope">
-            <el-button size="small" icon="Edit" type="primary" text>编辑</el-button>
+            <el-button
+              size="small"
+              icon="Edit"
+              type="primary"
+              text @click="handleEditBtnClick(scope.row)"
+            >
+              编辑
+            </el-button>
             <el-button
               size="small"
               icon="delete"
@@ -70,7 +77,7 @@ import useSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format'
 
 // 定义自定义事件
-const emit = defineEmits(['newClick'])
+const emit = defineEmits(['newClick', 'editClick'])
 const currentPage = ref(1)
 const pageSize = ref(10)
 
@@ -98,13 +105,15 @@ function fetchUsersListData(formData: any = {}) {
   systemStore.postUsersListAction(queryInfo)
 }
 
-// 5.编辑和删除的操作
+// 5.删除/新建/编辑用户的操作
 function handleDeleteBtnClick(id: number) {
   systemStore.deleteUserByIdAction(id)
 }
-// 6.新建用户的操作
 function handleNewBtnClick() {
   emit('newClick')
+}
+function handleEditBtnClick(itemdata: any) {
+  emit('editClick', itemdata)
 }
 defineExpose({
   fetchUsersListData

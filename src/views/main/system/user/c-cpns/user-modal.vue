@@ -1,6 +1,6 @@
 <template>
   <div class="modal">
-    <el-dialog v-model="dialogVisible" title="新建用户" width="30%" center>
+    <el-dialog v-model="dialogVisible" :title="isNewRef ? '新建用户' : '编辑用户'" width="30%" center>
       <div class="form">
         <el-form :model="formData" label-width="80px" size="large">
           <el-form-item label="用户名" prop="name">
@@ -12,7 +12,7 @@
               placeholder="请输入真实姓名"
             />
           </el-form-item>
-          <el-form-item label="密码" prop="password">
+          <el-form-item v-if="isNewRef" label="密码" prop="password">
             <el-input
               v-model="formData.password"
               placeholder="请输入密码"
@@ -60,7 +60,7 @@ import useMainStore from '@/store/main/main'
 import useSystemStore from '@/store/main/system/system'
 
 const dialogVisible = ref(false)
-const formData = reactive({
+const formData = reactive<any>({
   name: '',
   realname: '',
   password: '',
@@ -71,20 +71,42 @@ const formData = reactive({
 
 // 1获取roles和departments的数据
 const mainStore = useMainStore()
-const systenStore = useSystemStore()
+const systemStore = useSystemStore()
 const { entireRoles, entireDepartments } = storeToRefs(mainStore)
 
-// 2定义设置dialogVisible的方法
-function setDialogVisible() {
+const isNewRef = ref(true)
+const editData = ref()
+
+// 2.定义设置dialogVisible的方法
+function setDialogVisible(isNew: boolean, itemData?: any) {
   // 这里可以做一层拦截
   dialogVisible.value = true
+  isNewRef.value = isNew
+  if (!isNew && itemData) {
+    // 编辑数据
+    for (const key in formData) {
+      formData[key] = itemData[key]
+    }
+    editData.value = itemData
+  } else {
+    // 新建数据
+    for (const key in formData) {
+      formData[key] = ''
+    }
+    editData.value = null
+  }
 }
 
 // 3.点击了确定逻辑
 function handleConfirmClick() {
   dialogVisible.value = false
-  // 创建新用户
-  systenStore.newUserDataAction(formData)
+  if (!isNewRef.value && editData.value) {
+    // 编辑用户
+    systemStore.editUserDataAction(editData.value.id, formData)
+  } else {
+    // 创建新用户
+    systemStore.newUserDataAction(formData)
+  }
 }
 
 // 暴露属性和方法
