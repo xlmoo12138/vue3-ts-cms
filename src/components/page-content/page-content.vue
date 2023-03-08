@@ -75,6 +75,7 @@ import { formatUTC } from '@/utils/format'
 
 interface IProps {
   contentConfig: {
+    pageName: string
     header?: {
       title?: string
       btnTitle?: string
@@ -82,7 +83,6 @@ interface IProps {
     propsList: any[]
   }
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps<IProps>()
 // 定义自定义事件
 const emit = defineEmits(['newClick', 'editClick'])
@@ -110,12 +110,12 @@ function fetchPageListData(formData: any = {}) {
   const pageInfo = { size, offset }
   const queryInfo = { ...pageInfo, ...formData }
   // 发起网络请求
-  systemStore.postPageListAction('department', queryInfo)
+  systemStore.postPageListAction(props.contentConfig.pageName, queryInfo)
 }
 
 // 5.删除/新建/编辑用户的操作
 function handleDeleteBtnClick(id: number) {
-  systemStore.deletePageByIdAction('department', id)
+  systemStore.deletePageByIdAction(props.contentConfig.pageName, id)
 }
 function handleNewBtnClick() {
   emit('newClick')
