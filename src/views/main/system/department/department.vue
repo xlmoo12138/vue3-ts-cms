@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts" name="department">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import searchConfig from './config/search.config'
 import contentConfig from './config/content.config'
 import modalConfig from './config/modal.config'
@@ -23,6 +23,8 @@ import PageModal from '@/components/page-modal/page-modal.vue'
 import PageContent from '@/components/page-content/page-content.vue'
 import PageSearch from '@/components/page-search/page-search.vue'
 import useMainStore from '@/store/main/main'
+import usePageContent from '@/hooks/usePageCotent'
+import usePageModal from '@/hooks/usePageModal'
 
 // 对modalConfig进行操作
 const modalConfigRef = computed(() => {
@@ -38,22 +40,12 @@ const modalConfigRef = computed(() => {
 
   return modalConfig
 })
-const contentRef = ref<InstanceType<typeof PageContent>>()
-function handleQueryClick(queryInfo: any) {
-  contentRef.value?.fetchPageListData(queryInfo)
-}
-function handleResetClick() {
-  contentRef.value?.fetchPageListData()
-}
+// setup相同逻辑的抽取：hooks
+// 点击search， content的操作
+const { contentRef, handleQueryClick, handleResetClick } = usePageContent()
 
-const modalRef = ref<InstanceType<typeof PageModal>>()
 // 点击content， modal的操作
-function handleNewClick() {
-  modalRef.value?.setModalVisible(true)
-}
-function handleEditClick(itemData: any) {
-  modalRef.value?.setModalVisible(false, itemData)
-}
+const { modalRef, handleNewClick, handleEditClick } = usePageModal()
 </script>
 
 <style scoped>
