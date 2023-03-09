@@ -60,10 +60,8 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import useSystemStore from '@/store/main/system/system'
-// import type { IModalProps } from './type'
 
 // interface IModalConfig
-
 interface IModalProps {
   modalConfig: {
     pageName: string
@@ -75,7 +73,6 @@ interface IModalProps {
   }
   otherInfo?: any
 }
-
 // 0.定义props
 const props = defineProps<IModalProps>()
 
