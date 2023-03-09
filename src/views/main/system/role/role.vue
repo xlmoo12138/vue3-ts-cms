@@ -2,7 +2,9 @@
   <div class="role">
     <page-search :search-config="searchConfig" @query-click="handleQueryClick" @reset-click="handleResetClick" />
     <page-content ref="contentRef" :content-config="contentConfig" @new-click="handleNewClick" @edit-click="handleEditClick" />
-    <page-modal ref="modalRef" :modal-config="modalConfig" />
+    <page-modal ref="modalRef" :modal-config="modalConfig">
+      <template #menuList><span>菜单列表</span></template>
+    </page-modal>
   </div>
 </template>
 
